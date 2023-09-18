@@ -1,3 +1,4 @@
+package SalesDiscountChecker;
 import java.util.Scanner;
 
 public class SalesDiscountChecker {
