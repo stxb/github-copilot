@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"LazadaOnlineOrderingSystem","c":"LazadaOnlineOrderingSystem","l":"LazadaOnlineOrderingSystem()","u":"%3Cinit%3E()"},{"p":"LazadaOnlineOrderingSystem","c":"LazadaOnlineOrderingSystem","l":"main(String[])","u":"main(java.lang.String[])"}];updateSearchResults();
