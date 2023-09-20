@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Custom exception class for handling invalid MRT station input.
+ */
 class InvalidMRTStationException extends Exception {
     public InvalidMRTStationException(String message) {
         super(message);
@@ -22,10 +25,20 @@ class InvalidFarePaymentException extends Exception {
     }
 }
 
+
+/**
+ * Represents fare information for an MRT station, including fare amount and stop number.
+ */
 class FareInfo {
     private double fareAmount;
     private int stopNumber;
 
+    /**
+     * Constructs a new FareInfo instance with the specified fare amount and stop number.
+     * 
+     * @param fareAmount The fare amount.
+     * @param stopNumber The stop number.
+     */
     public FareInfo(double fareAmount, int stopNumber) {
         this.fareAmount = fareAmount;
         this.stopNumber = stopNumber;
@@ -42,8 +55,7 @@ class FareInfo {
 
 public class MRTFareCalculator {
     public static void main(String[] args) {
-        // Write request input from user last name, first name, destination, and fare
-        // amount.
+        /** Write request input from user last name, first name, destination, and fare amount */
 
         Scanner scanner = new Scanner(System.in);
         Map<String, FareInfo> fareMap = initializeFareMap();
@@ -63,7 +75,7 @@ public class MRTFareCalculator {
                 System.out.print("Enter Destination: ");
                 String destination = scanner.nextLine();
 
-                // Search for a partial match destination name
+                /** Search for a partial match destination name */
                 String matchingDestination = findPartialDestinationMatch(destination, fareMap);
 
                 if (matchingDestination != null) {
@@ -125,7 +137,11 @@ public class MRTFareCalculator {
         scanner.close();
     }
 
-    // Initialize the fare map with valid MRT stations, fares, and stop numbers
+    /**
+     * Initialize the fare map with valid MRT stations, fares, and stop numbers.
+     * 
+     * @return A map containing fare information for each MRT station.
+     */
     private static Map<String, FareInfo> initializeFareMap() {
         Map<String, FareInfo> fareMap = new HashMap<>();
         fareMap.put("Quezon Avenue and GMA Kamuning", new FareInfo(10.00, 1));
@@ -137,7 +153,13 @@ public class MRTFareCalculator {
         return fareMap;
     }
 
-    // Find a partial match for the station name
+    /**
+     * Find a partial match for the station name within the MRT station names.
+     * 
+     * @param partialStationName The partial station name entered by the user.
+     * @param fareMap The map containing fare information for each MRT station.
+     * @return A matching MRT station name or null if no match is found.
+     */
     private static String findPartialDestinationMatch(String partialStationName, Map<String, FareInfo> fareMap) {
         for (String fullDestination : fareMap.keySet()) {
             if (fullDestination.toLowerCase().contains(partialStationName.toLowerCase())) {
@@ -147,7 +169,12 @@ public class MRTFareCalculator {
         return null;
     }
 
-    // Initialize the fare map with valid MRT stations and fares
+    /**
+     * Initialize the fare map with valid MRT stations and fares.
+     * 
+     * @param fareMap The map containing fare information for each MRT station.
+     * @return A map containing total fares initialized to zero for each station.
+     */
     private static Map<String, Double> initializeTotalFaresMap(Map<String, FareInfo> fareMap) {
         Map<String, Double> totalFares = new HashMap<>();
         for (String destination : fareMap.keySet()) {
@@ -156,7 +183,14 @@ public class MRTFareCalculator {
         return totalFares;
     }
 
-    // Save passenger information to a text file
+    /**
+     * Save passenger information to a text file with a filename based on the destination.
+     * 
+     * @param lastName The last name of the passenger.
+     * @param firstName The first name of the passenger.
+     * @param destination The destination station name.
+     * @param fareAmount The fare amount paid by the passenger.
+     */
     private static void savePassengerInfo(String lastName, String firstName, String destination, double fareAmount) {
         String fileName = "Stop " + (getStopNumber(destination)) + "-" + destination.replace(" ", "_") + ".txt";
         try (FileWriter writer = new FileWriter(fileName, true)) {
@@ -169,7 +203,12 @@ public class MRTFareCalculator {
         }
     }
 
-    // Get the stop number from the destination
+    /**
+     * Get the stop number associated with the given destination station name.
+     * 
+     * @param destination The destination station name.
+     * @return The stop number corresponding to the destination.
+     */
     private static int getStopNumber(String destination) {
         int stopNumber = 0;
         for (Entry<String, FareInfo> entry : initializeFareMap().entrySet()) {
@@ -181,6 +220,12 @@ public class MRTFareCalculator {
         return stopNumber;
     }
 
+    /**
+     * Print the total fares for all MRT stops, sorted by stop number in ascending order.
+     * 
+     * @param totalFares The map containing total fares for each destination.
+     * @param fareMap The map containing fare information for MRT stations.
+     */
     private static void printTotalFares(Map<String, Double> totalFares, Map<String, FareInfo> fareMap) {
         List<String> destinations = new ArrayList<>(totalFares.keySet());
         destinations.sort(Comparator.comparingInt(dest -> fareMap.get(dest).getStopNumber()));
