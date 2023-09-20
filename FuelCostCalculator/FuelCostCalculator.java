@@ -27,6 +27,13 @@ public class FuelCostCalculator {
         scanner.close();
     }
 
+    /**
+     * Prompt the user to enter the fuel type (unleaded, diesel, or premium) and return it as a
+     * lowercase string.
+     * 
+     * @param input The Scanner object for user input.
+     * @return The fuel type as a lowercase string.
+     */
     public static String getFuelType(Scanner input) {
         String fuelType;
         while (true) {
@@ -40,10 +47,23 @@ public class FuelCostCalculator {
         }
     }
 
+    /**
+     * Check if the provided fuel type is valid (unleaded, diesel, or premium).
+     * 
+     * @param fuelType The fuel type to validate.
+     * @return True if the fuel type is valid, false otherwise.
+     */
     public static boolean isValidFuelType(String fuelType) {
-        return fuelType.equals("unleaded") || fuelType.equals("diesel") || fuelType.equals("premium");
+        return fuelType.equals("unleaded") || fuelType.equals("diesel")
+                || fuelType.equals("premium");
     }
 
+    /**
+     * Prompt the user to enter the number of liters and return it as a double.
+     * 
+     * @param input The Scanner object for user input.
+     * @return The number of liters as a double.
+     */
     public static double getLiters(Scanner input) {
         double liters;
         while (true) {
@@ -62,6 +82,12 @@ public class FuelCostCalculator {
         }
     }
 
+    /**
+     * Get the price per liter based on the provided fuel type.
+     * 
+     * @param fuelType The type of fuel (unleaded, diesel, or premium).
+     * @return The price per liter for the specified fuel type.
+     */
     public static double getPricePerLiter(String fuelType) {
         switch (fuelType) {
             case "unleaded":
@@ -75,15 +101,38 @@ public class FuelCostCalculator {
         }
     }
 
+    /**
+     * Calculate the total purchase amount based on the number of liters and price per liter.
+     * 
+     * @param liters The number of liters purchased.
+     * @param pricePerLiter The price per liter.
+     * @return The total purchase amount.
+     */
     public static double calculatePurchaseAmount(double liters, double pricePerLiter) {
         return liters * pricePerLiter;
     }
 
+    /**
+     * Calculate the Value Added Tax (VAT) amount, which is 12% of the purchase amount.
+     * 
+     * @param purchaseAmount The total purchase amount.
+     * @return The VAT amount.
+     */
     public static double calculateVAT(double purchaseAmount) {
         return 0.12 * purchaseAmount;
     }
 
-    public static void displayReceipt(String fuelType, double pricePerLiter, double purchaseAmount, double vat) {
+    /**
+     * Display a receipt with purchase details, including fuel type, price per liter, purchase
+     * amount, VAT, and total amount.
+     * 
+     * @param fuelType The type of fuel (unleaded, diesel, or premium).
+     * @param pricePerLiter The price per liter.
+     * @param purchaseAmount The total purchase amount.
+     * @param vat The Value Added Tax (VAT) amount.
+     */
+    public static void displayReceipt(String fuelType, double pricePerLiter, double purchaseAmount,
+            double vat) {
         System.out.println("\nReceipt:");
         System.out.println("Fuel Type: " + fuelType);
         System.out.println("Price Per Liter: " + String.format("%.2f", pricePerLiter));
