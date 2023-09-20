@@ -110,7 +110,7 @@ public class MRTFareCalculator {
                     System.out.println("Thank you for paying. Your change is " + change);
                 }
 
-                savePassengerInfo(lastName, firstName, destination, fareAmount);
+                savePassengerInfo(lastName, firstName, destination, fareAmount, stopNumber);
                 double currentTotal = totalFares.get(destination) + fareAmount;
                 totalFares.put(destination, currentTotal);
 
@@ -126,7 +126,7 @@ public class MRTFareCalculator {
 
                 if (!continueInput.equalsIgnoreCase("Y")) {
                     System.out.println(
-                            "\nEntering \"Y\" or \"y\" will then repeat the entry. Selection \"N\" or \"n\" will terminate the application.");
+                            "\nProgram terminated. Thank you for using the Laging Nasisira MRT Application.");
                     break;
                 }
             } catch (InvalidMRTStationException | InvalidFarePaymentException e) {
@@ -191,13 +191,15 @@ public class MRTFareCalculator {
      * @param destination The destination station name.
      * @param fareAmount The fare amount paid by the passenger.
      */
-    private static void savePassengerInfo(String lastName, String firstName, String destination, double fareAmount) {
-        String fileName = "Stop " + (getStopNumber(destination)) + "-" + destination.replace(" ", "_") + ".txt";
+    private static void savePassengerInfo(String lastName, String firstName, String destination,
+            double fareAmount, int stopNumber) {
+        String fileName = "Stop " + stopNumber + "-" + destination.replace(" ", "_") + ".txt";
         try (FileWriter writer = new FileWriter(fileName, true)) {
             writer.write("Last Name: " + lastName + "\n");
             writer.write("First Name: " + firstName + "\n");
             writer.write("Destination: " + destination + "\n");
-            writer.write("Fare Amount: " + fareAmount + "\n\n");
+            writer.write("Fare Amount: " + fareAmount + "\n");
+            writer.write("Stop Number: " + stopNumber + "\n\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
